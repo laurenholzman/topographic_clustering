@@ -387,15 +387,15 @@ function updateRasterLayer(selectedLayer) {
 
 
 
-  addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_02282024.geojson", 'gf_all_p');
-addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_2.geojson", 'gf_single_p');
-      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/mariposa_all_points.geojson", 'mariposa_all_p');
-      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/Mariposa_single_points.geojson", 'mariposa_single_p');
-addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_02282024.geojson", 'gf_all_m');
-addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_2.geojson", 'gf_single_m');
+  addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'gf_all_p');
+addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'gf_single_p');
+      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'mariposa_all_p');
+      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'mariposa_single_p');
+addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'gf_all_m');
+addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'gf_single_m');
 
- addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/mariposa_all_points.geojson", 'mariposa_all_m');
-      addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/Mariposa_single_points.geojson", 'mariposa_single_m');
+ addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'mariposa_all_m');
+      addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'mariposa_single_m');
 
 // Initial update with default values
 
@@ -406,12 +406,12 @@ addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/
 
 function loadRasters(callback) {
   var rasterInitial = [
-  ['https://laurenholzman.github.io/numbatday2022/gf_hand_kmeans_result.tif','gf_single'],
+  ['https://laurenholzman.github.io/topographic_clustering/GF_02282024_derived_el_nohand.tif','gf_single'],
 
-['https://laurenholzman.github.io/numbatday2022/GF_02282024_derived_el_nohand.tif','gf_all'],
+['https://laurenholzman.github.io/topographic_clustering/GF_02282024_derived_el_nohand.tif','gf_all'],
     
-['https://laurenholzman.github.io/numbatday2022/mariposa_hand_kmeans_result.tif','mariposa_single'],
-  ['https://laurenholzman.github.io/numbatday2022/mariposa_hand_kmeans_all_result2.tif','mariposa_all']
+['https://laurenholzman.github.io/topographic_clustering/GF_02282024_derived_el_nohand.tif','mariposa_single'],
+  ['https://laurenholzman.github.io/topographic_clustering/GF_02282024_derived_el_nohand.tif','mariposa_all']
 ]
 for (i in rasterInitial) {
   
