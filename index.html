@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <title>Sequoia Grove Topographic Clustering</title>
+    <title>Leaflet Point Layer</title>
 </head>
        <style>
         body {
@@ -177,6 +177,39 @@ button.active {
   color: white;
   border: none;
 }
+/*info button */
+  .info-panel {
+  position: absolute;
+  top: 10px;
+  right: 65px;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  max-width: 300px; /* Set maximum width */
+  max-height: 500px; 
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.toggle-button2 {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.info-content {
+  display: none;
+  padding: 10px;
+}
+
+.info-content p {
+  margin: 0 0 10px; /* Add margin bottom to create space between paragraphs */
+}
+       
 
     </style>
 
@@ -212,6 +245,29 @@ button.active {
   </div>
   <div id="border-legend">
   </div>
+  </div>
+  
+  <div id="infoPanel" class="info-panel">
+    <button id="toggleButton" class="toggle-button2">Map Information</button>
+    <div id="infoContent" class="info-content">
+      <!-- Your map information goes here --> 
+      <h1>Sequoia Topographic Clustering Map Information</h1>
+
+<p>This map aims to show the current progress in clustering groves based on soil moisture within Sequoia and Yosemite National Parks.</p>
+
+<p>This project aims to take a form of widely accessible data, DEMs, and use it to predict soil moisture groves for application to drought and wildfire response. Compared to other sampling methods, DEMs are low-cost, simple to work with, and easily applied to large areas that may be inaccessible otherwise. </p>
+  
+  <p>Methodologically, indices related to soil moisture were derived from the DEM and used as input for k-means clustering, which is the output shown in this map. </p>
+
+<h2>Navigation:</h2>
+
+<p>The <b>Groves</b> toggle changes the zoom between Giant Forest grove and all groves. Clustering for all groves was done by combining the data for each grove, while the Giant Forest layer displays clustering when done on the individual grove level.
+
+<p>The <b>Input Layers</b> toggle allows you to view two different sets of results with different input layers included. This demonstrates the dependency of the layers included on the clustering results.</p>
+
+<p>When zoomed in, validation point results in giant forest are shown as a pie chart, representing the fraction of the surrounding neighborhood, with a radius of 6 meters, assigned to each cluster class. This gives a better understanding of the success compared to the qualitative hydrological classifications. </p>
+
+    </div>
   </div>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
    <script src="canvasicon.js"></script>
@@ -306,7 +362,14 @@ var baseMaps = {
     "Esri_WorldGrayCanvas":Esri_WorldGrayCanvas
 };
       
-
+//Info Button
+toggleButton.addEventListener('click', function() {
+  if (infoContent.style.display === 'none') {
+    infoContent.style.display = 'block';
+  } else {
+    infoContent.style.display = 'none';
+  }
+});
 
       
       
@@ -387,15 +450,15 @@ function updateRasterLayer(selectedLayer) {
 
 
 
-  addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'gf_all_p');
-addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'gf_single_p');
-      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'mariposa_all_p');
-      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'mariposa_single_p');
-addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'gf_all_m');
-addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'gf_single_m');
+  addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_02282024.geojson", 'gf_all_p');
+addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_2.geojson", 'gf_single_p');
+      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/mariposa_all_points.geojson", 'mariposa_all_p');
+      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/Mariposa_single_points.geojson", 'mariposa_single_p');
+addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_02282024.geojson", 'gf_all_m');
+addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_2.geojson", 'gf_single_m');
 
- addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'mariposa_all_m');
-      addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_02282024.geojson", 'mariposa_single_m');
+ addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/mariposa_all_points.geojson", 'mariposa_all_m');
+      addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/Mariposa_single_points.geojson", 'mariposa_single_m');
 
 // Initial update with default values
 
@@ -406,12 +469,12 @@ addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_cl
 
 function loadRasters(callback) {
   var rasterInitial = [
-  ['https://laurenholzman.github.io/topographic_clustering/GF_02282024_derived_el_nohand.tif','gf_single'],
+  ['https://laurenholzman.github.io/numbatday2022/gf_hand_kmeans_result.tif','gf_single'],
 
-['https://laurenholzman.github.io/topographic_clustering/GF_02282024_derived_el_nohand.tif','gf_all'],
+['https://laurenholzman.github.io/numbatday2022/GF_02282024_derived_el_nohand.tif','gf_all'],
     
-['https://laurenholzman.github.io/topographic_clustering/GF_02282024_derived_el_nohand.tif','mariposa_single'],
-  ['https://laurenholzman.github.io/topographic_clustering/GF_02282024_derived_el_nohand.tif','mariposa_all']
+['https://laurenholzman.github.io/numbatday2022/mariposa_hand_kmeans_result.tif','mariposa_single'],
+  ['https://laurenholzman.github.io/numbatday2022/mariposa_hand_kmeans_all_result2.tif','mariposa_all']
 ]
 for (i in rasterInitial) {
   
