@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <title>Leaflet Point Layer</title>
+    <title>Sequoia Topographic Clustering</title>
 </head>
        <style>
         body {
@@ -230,10 +230,10 @@ button.active {
 </div>
   </div>
     <div id="cluster">
-      <span><b>Cluster Data Source</b> </span>
+      <span><b>Input Layers</b> </span>
   <div class="toggle-button">
-  <button id="all-button" class="active">All Groves</button>
-  <button id="single-button">Single Grove</button>
+  <button id="all-button" class="active">All</button>
+  <button id="single-button">Subset</button>
 </div>
   </div>
     
@@ -263,7 +263,7 @@ button.active {
 
 <p>The <b>Groves</b> toggle changes the zoom between Giant Forest grove and all groves. Clustering for all groves was done by combining the data for each grove, while the Giant Forest layer displays clustering when done on the individual grove level.
 
-<p>The <b>Input Layers</b> toggle allows you to view two different sets of results with different input layers included. This demonstrates the dependency of the layers included on the clustering results.</p>
+<p>The <b>Input Layers</b> toggle allows you to view two different sets of results with different input layers included. This demonstrates the dependency of the layers included on the clustering results. The full list of input layers is elevation, aspect, slope, heat load index (HLI), height above nearest drainage (HAND), depth to water (DTW), and maximum elevation deviation (DEVmax). The subset of layers included is composed of the elevation, HLI, DTW, and DEVmax. </p>
 
 <p>When zoomed in, validation point results in giant forest are shown as a pie chart, representing the fraction of the surrounding neighborhood, with a radius of 6 meters, assigned to each cluster class. This gives a better understanding of the success compared to the qualitative hydrological classifications. </p>
 
@@ -330,7 +330,7 @@ var map = L.map('map', {
 
 });
     hi = 0;
-var lat = map.on('click', function(e) {
+/*var lat = map.on('click', function(e) {
     console.log(e.latlng); 
 hi = e.latlng;
   var marker = L.marker([36.56727099,	-118.7440642]).bindPopup("YoYo/").addTo(map);
@@ -345,7 +345,7 @@ var pieMarker = L.piechartMarker({lat:36.56727099,lng:-118.7640642}, {
               
           }).bindPopup("hi").addTo(map)
 
-pieMarker.bindPopup("Yo/")});
+pieMarker.bindPopup("Yo/")}); */
       
       
 var rasterLayer = L.layerGroup().addTo(map);
@@ -450,15 +450,15 @@ function updateRasterLayer(selectedLayer) {
 
 
 
-  addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_02282024.geojson", 'gf_all_p');
-addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_2.geojson", 'gf_single_p');
-      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/mariposa_all_points.geojson", 'mariposa_all_p');
-      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/Mariposa_single_points.geojson", 'mariposa_single_p');
-addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_02282024.geojson", 'gf_all_m');
-addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/gf_points_2.geojson", 'gf_single_m');
+  addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_gf_all.geojson", 'gf_all_p');
+addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_gf_subset.geojson", 'gf_single_p');
+      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_all_all.geojson", 'mariposa_all_p');
+      addGeoJSONLayer("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_all_subset.geojson", 'mariposa_single_p');
+addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_gf_all.geojson", 'gf_all_m');
+addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_gf_subset.geojson", 'gf_single_m');
 
- addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/mariposa_all_points.geojson", 'mariposa_all_m');
-      addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/main/Mariposa_single_points.geojson", 'mariposa_single_m');
+ addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_all_all.geojson", 'mariposa_all_m');
+      addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/topographic_clustering/main/gf_points_all_subset.geojson", 'mariposa_single_m');
 
 // Initial update with default values
 
@@ -469,12 +469,12 @@ addGeoJSONMarker("https://raw.githubusercontent.com/laurenholzman/numbatday2022/
 
 function loadRasters(callback) {
   var rasterInitial = [
-  ['https://laurenholzman.github.io/numbatday2022/gf_hand_kmeans_result.tif','gf_single'],
+  ['https://laurenholzman.github.io/topographic_clustering/Giant_Forest_3m_subset.tif','gf_single'],
 
-['https://laurenholzman.github.io/numbatday2022/GF_02282024_derived_el_nohand.tif','gf_all'],
+['https://laurenholzman.github.io/topographic_clustering/Giant_Forest_3m_all.tif','gf_all'],
     
-['https://laurenholzman.github.io/numbatday2022/mariposa_hand_kmeans_result.tif','mariposa_single'],
-  ['https://laurenholzman.github.io/numbatday2022/mariposa_hand_kmeans_all_result2.tif','mariposa_all']
+['https://laurenholzman.github.io/topographic_clustering/SEKI_all_3m_subset.tif','mariposa_single'],
+  ['https://laurenholzman.github.io/topographic_clustering/SEKI_all_3m_all.tif','mariposa_all']
 ]
 for (i in rasterInitial) {
   
@@ -524,23 +524,34 @@ function addGeoJSONLayer(url, layerName) {
                     stroke=wetcolor
                   }
                   
-    
-            return L.piechartMarker(latlng,
+    var pieMarker = L.piechartMarker(latlng,
           {
               radius: 15,
               data: [
                 //color inside by kmeans focal values
-                  { name: '1', value: feature.properties.pie_3, style: { fillStyle: drycolor, strokeStyle: stroke, lineWidth: 5 }  },
-                  { name: '2', value: feature.properties.pie_2, style: { fillStyle: othercolor, strokeStyle: stroke, lineWidth: 5 }},
+                  { name: '1', value: feature.properties.p_2, style: { fillStyle: drycolor, strokeStyle: stroke, lineWidth: 5 }  },
+                  { name: '2', value: feature.properties.p_1, style: { fillStyle: othercolor, strokeStyle: stroke, lineWidth: 5 }},
 
-                  { name: '3', value: feature.properties.pie_1, style: { fillStyle: wetcolor, strokeStyle: stroke, lineWidth: 5 } },
+                  { name: '3', value: feature.properties.p_3, style: { fillStyle: wetcolor, strokeStyle: stroke, lineWidth: 5 } },
                   
               ],
               
-          }).bindPopup('Hello world!')
+          })
+   // Define the popup content using the attributes from the GeoJSON properties
+                    var popupContent = "<h3>" + feature.properties.tree + "</h3>";
+                    // Add more attributes as needed
+                    popupContent += "<p>Attribute 1: " + feature.properties.attribute1 + "</p>";
+                    popupContent += "<p>Attribute 2: " + feature.properties.attribute2 + "</p>";
+
+                    // Create a popup and bind it to the marker
+                    var popup = L.popup().setContent(popupContent);
+                    pieMarker.bindPopup(popup);
+
+                    return pieMarker;
                 },
               
             })
+            
 
   /*
        const invisibleGeoJson = L.geoJSON(data, {
@@ -581,26 +592,38 @@ function addGeoJSONMarker(url, layerName) {
                     stroke=wetcolor
                   }
                  
-                      if (feature.properties.kmeans==2) {
+                      if (feature.properties.k==2) {
                    fillCo= drycolor  
-                  } else if (feature.properties.kmeans==3){
+                  } else if (feature.properties.k==3){
                    fillCo= wetcolor
 
                   } else {
                     fillCo=othercolor
                   }
-          return L.piechartMarker(latlng,
+          var piechart2 = L.piechartMarker(latlng,
           {
               radius: 10,
               data: [
                 //color inside by kmeans focal values
-                  { name: '1', value: feature.properties.kmeans, style: { fillStyle: fillCo, strokeStyle: stroke, lineWidth: 5 }  },
+                  { name: '1', value: feature.properties.k, style: { fillStyle: fillCo, strokeStyle: stroke, lineWidth: 5 }  },
                   
                   
               ],
               
           })
-    
+          
+           // Define the popup content using the attributes from the GeoJSON properties
+                    var popupContent = "<h3>" + feature.properties.tree + "</h3>";
+                    // Add more attributes as needed
+                    popupContent += "<p>Attribute 1: " + feature.properties.attribute1 + "</p>";
+                    popupContent += "<p>Attribute 2: " + feature.properties.attribute2 + "</p>";
+
+                    // Create a popup and bind it to the layer
+                    var popup = L.popup().setContent(popupContent);
+                  
+          piechart2 = piechart2.bindPopup(popup)
+          
+          return piechart2
            
                 },
             });
@@ -626,9 +649,9 @@ function addGeoJSONMarker(url, layerName) {
      othernum = 3;
      wetnum = 2;
    }  else if (layerName=="gf_all") {
-     drynum = 3;
-     othernum = 2;
-     wetnum = 1;
+     drynum = 1;
+     othernum = 3;
+     wetnum = 2;
    }else {
      drynum = 1;
      othernum =2;
@@ -671,7 +694,6 @@ function addGeoJSONMarker(url, layerName) {
       }
 
 
-
 //legends
 
   
@@ -695,7 +717,7 @@ function addGeoJSONMarker(url, layerName) {
  document.getElementById('raster-legend').innerHTML = rasterLegend
       
   var borderLegend = `<div class="legend-title">
-    <strong>Hydrological Classification</strong>
+    <strong>Tree Hydrological Classification</strong>
   </div>
   <div class="legend-item">
     <span class="circle" style="border: 6px solid ${drycolor};"></span>
